@@ -1,0 +1,33 @@
+def secrets = [
+        [path: 'CI05021966_CI03369999//AD/delta.sbrf.ru/creds/cab-sa-dvo08643', secretValues: [
+                [envVar: 'pass', vaultKey: 'current_password']
+        ]]
+]
+def configuration = [
+        vaultUrl: 'https://t.secrets.delta.sbrf.ru', vaultCredentialId: 'ci05021966_ci03369999_a_ci03364874_jen_main_ac', engineVersion: 1
+]
+pipeline {
+    agent {
+        label "masterLin"
+    }
+    stages {
+
+        stage("Get creds") {
+            steps {
+                script {
+                       withVault([configuration: configuration, vaultSecrets: secrets]) {
+
+                        // writeFile file: 'cert.crt', text: pass
+                        // sh """echo ${pass} > cert.crt"""
+                        // sh "cat cert.crt"
+                        sh "echo $pass"
+                        sh '''
+                            echo -n $pass | base64 > tmpp
+                            cat tmpp
+                        '''
+                    }
+                }
+            }
+        }
+    }
+}
