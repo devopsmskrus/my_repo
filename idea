@@ -1,0 +1,54 @@
+Решение проблем с активацией на Linux (SBER OS)
+Если активировать ПО JetBrains ключом из файла *_key.txt не удаётся, то необходимо проделать следующее:
+
+1. Проверьте наличие папки jetbra в папке opt/jetbrains/*
+
+где
+
+* - наименование соответствующего ПО JetBrains.
+
+В папке jetbra должен находиться файл ja-netfilter.jar и папки: config-jetbrains, plugins-jetbrains.
+
+2. Проверьте наличие файла *64.vmoptions в папке: Домашняя папка/.config/JetBrains/**
+
+где
+
+*64.vmoptions - файл соответствующего ПО JetBrains, например: idea64.vmoptions
+
+** - папка соответствующего ПО JetBrains.
+
+3. Проверьте содержимое файла *64.vmoptions. Примерное содержимое файла *64.vmoptions:
+
+-XX:ReservedCodeCacheSize=512m
+
+-Xms128m
+
+-Xmx750m
+
+-XX:+UseG1GC
+
+-XX:SoftRefLRUPolicyMSPerMB=50
+
+-XX:CICompilerCount=2
+
+-XX:+HeapDumpOnOutOfMemoryError
+
+-XX:-OmitStackTraceInFastThrow
+
+-ea
+
+-Dsun.io.useCanonCaches=false
+
+-Djdk.http.auth.tunneling.disabledSchemes=""
+
+-Djdk.attach.allowAttachSelf=true
+
+-Djdk.module.illegalAccess.silent=true
+
+-Dkotlinx.coroutines.debug=off
+
+-Dsun.tools.attach.tmp.only=true
+
+Если каких-то строк нет – добавьте их в файл.
+
+4. После выполнения п.п. 1 – 3 запустите соответствующее ПО JetBrains и активируйте его ключом из файла *_key.txt.
